@@ -12,14 +12,14 @@ import AssetsLibrary
 import MobileCoreServices
 import Photos
 
-enum HStatus{
+public enum HStatus{
     case success, canceled, cameraDisable, photoLibDisable, notImage
     case notDetermined
     case restricted
     case denied
     case authorized
     
-    func description() -> String {
+    public func description() -> String {
         switch self {
             case .success:
                 return "成功"
@@ -43,9 +43,9 @@ enum HStatus{
     }
 }
 
-enum HChooseType{
+public enum HChooseType{
     case takePhoto, choosePhoto
-    func description() -> String {
+    public func description() -> String {
         switch self {
             case .takePhoto:
                 return "相机"
@@ -55,14 +55,14 @@ enum HChooseType{
     }
 }
 
-typealias HCompletion = (UIImage?,HStatus) -> Void
+public typealias HCompletion = (UIImage?,HStatus) -> Void
 
 /// HImagePickerUtils
-class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+public class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     private var pickPhotoEnd: HCompletion?
     
-    func takePhoto(presentFrom rootVC:UIViewController,completion:HCompletion?) {
+    public func takePhoto(presentFrom rootVC:UIViewController,completion:HCompletion?) {
         self.pickPhotoEnd = completion
         if HImagePickerUtils.isCameraAvailable() && HImagePickerUtils.doesCameraSupportTakingPhotos(){
             HImagePickerUtils.cameraAuthorized { (authorized, status) in
@@ -87,7 +87,7 @@ class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationCo
         }
     }
     
-    func choosePhoto(presentFrom rootVC:UIViewController,completion:HCompletion?){
+    public func choosePhoto(presentFrom rootVC:UIViewController,completion:HCompletion?){
         self.pickPhotoEnd = completion
         if HImagePickerUtils.isPhotoLibraryAvailable(){
             HImagePickerUtils.photoAuthorized({ (authorized, status) in
@@ -116,7 +116,7 @@ class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationCo
     }
     
     //MARK: UIImagePickerControllerDelegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let mediaType = info[UIImagePickerControllerMediaType] as! NSString
         if mediaType.isEqual(to: kUTTypeImage as String) {
             let theImage : UIImage!
@@ -132,14 +132,14 @@ class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationCo
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true) { 
             self.pickPhotoEnd?(nil,HStatus.canceled)
         }
     }
     
     //MARK: 用户是否授权
-    static func cameraAuthorized(_ completion:((Bool,HStatus) -> Void)?){
+    public static func cameraAuthorized(_ completion:((Bool,HStatus) -> Void)?){
         let status = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
         switch status {
             case .authorized:
@@ -153,7 +153,7 @@ class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationCo
         }
     }
     
-    static func photoAuthorized(_ completion:((Bool,HStatus) -> Void)?){
+    public static func photoAuthorized(_ completion:((Bool,HStatus) -> Void)?){
         let status = PHPhotoLibrary.authorizationStatus()
         switch status {
             case .authorized:
@@ -168,22 +168,22 @@ class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationCo
     }
     
     //MARK: 相机功能是否可用
-    static func isCameraAvailable() -> Bool{
+    public static func isCameraAvailable() -> Bool{
         return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
     }
     
     //MARK: 前置摄像头是否可用
-    static func isFrontCameraAvailable() -> Bool{
+    public static func isFrontCameraAvailable() -> Bool{
         return UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.front)
     }
     
     //MARK: 后置摄像头是否可用
-    static func isRearCameraAvailable() -> Bool{
+    public static func isRearCameraAvailable() -> Bool{
         return UIImagePickerController.isCameraDeviceAvailable(UIImagePickerControllerCameraDevice.rear)
     }
     
     //MARK: 判断是否支持某种多媒体类型：拍照，视频
-    static func cameraSupportsMedia(paramMediaType:NSString, sourceType:UIImagePickerControllerSourceType) -> Bool {
+    public static func cameraSupportsMedia(paramMediaType:NSString, sourceType:UIImagePickerControllerSourceType) -> Bool {
         var result = false
         if paramMediaType.length == 0 {
             return false
@@ -202,30 +202,30 @@ class HImagePickerUtils: NSObject,UIImagePickerControllerDelegate,UINavigationCo
     }
     
     //MARK: 检查摄像头是否支持录像
-    static func doesCameraSupportShootingVides() -> Bool{
+    public static func doesCameraSupportShootingVides() -> Bool{
         return self.cameraSupportsMedia(paramMediaType: kUTTypeMovie, sourceType: UIImagePickerControllerSourceType.camera)
     }
     //MARK: 检查摄像头是否支持拍照
-    static func doesCameraSupportTakingPhotos() -> Bool{
+    public static func doesCameraSupportTakingPhotos() -> Bool{
         return self.cameraSupportsMedia(paramMediaType: kUTTypeImage, sourceType: UIImagePickerControllerSourceType.camera)
     }
     
     //MARK: 相册是否可用
-    static func isPhotoLibraryAvailable() -> Bool {
+    public static func isPhotoLibraryAvailable() -> Bool {
         return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary)
     }
     
     //MARK: 是否可在相册中选择视频
-    static func canUserPickVideosFromPhotoLibrary() -> Bool {
+    public static func canUserPickVideosFromPhotoLibrary() -> Bool {
         return self.cameraSupportsMedia(paramMediaType: kUTTypeMovie, sourceType: UIImagePickerControllerSourceType.photoLibrary)
     }
     
     //MARK: 是否可在相册中选择图片
-    static func canUserPickPhotosFromPhotoLibrary() -> Bool {
+    public static func canUserPickPhotosFromPhotoLibrary() -> Bool {
         return self.cameraSupportsMedia(paramMediaType: kUTTypeImage, sourceType: UIImagePickerControllerSourceType.photoLibrary)
     }
     
-    static func showTips(at rootVC:UIViewController!,type:HChooseType) {
+    public static func showTips(at rootVC:UIViewController!,type:HChooseType) {
         if #available(iOS 8.0, *) {
             let alertVC = UIAlertController(title: nil, message: "您阻止了\(type.description())访问权限", preferredStyle: UIAlertControllerStyle.alert)
             let openIt = UIAlertAction(title: "马上打开", style: UIAlertActionStyle.default, handler: { (alert:UIAlertAction) -> Void in

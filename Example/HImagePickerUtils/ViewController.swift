@@ -33,7 +33,6 @@ class ViewController: UIViewController {
         btnPickPhoto.tag = 110
         self.view.addSubview(btnPickPhoto)
         
-        
         let btnTakePhoto = UIButton(type: UIButtonType.custom)
         btnTakePhoto.frame = CGRect(x: 0, y: 0, width: 120, height: 30)
         btnTakePhoto.setTitle("拍一张", for: UIControlState.normal)
@@ -42,6 +41,7 @@ class ViewController: UIViewController {
         btnTakePhoto.tag = 112
         self.view.addSubview(btnTakePhoto)
     }
+    
     
     func buttonAction(button:UIButton!){
         switch button.tag{

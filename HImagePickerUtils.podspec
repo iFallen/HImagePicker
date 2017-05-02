@@ -18,25 +18,17 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-   Swift iOS ImagePicker Utils.
+   Tiny ImagePicker UtilityTool .
                        DESC
 
   s.homepage         = 'https://github.com/iFallen/HImagePickerUtils'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'JuanFelix' => 'hulj1204@yahoo.com' }
   s.source           = { :git => 'https://github.com/iFallen/HImagePickerUtils.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.social_media_url = 'https://ifallen.github.io'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'HImagePickerUtils/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'HImagePickerUtils' => ['HImagePickerUtils/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'Photos'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
