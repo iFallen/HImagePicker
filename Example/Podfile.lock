@@ -1,0 +1,16 @@
+PODS:
+  - HImagePickerUtils (0.1.0)
+
+DEPENDENCIES:
+  - HImagePickerUtils (from `../`)
+
+EXTERNAL SOURCES:
+  HImagePickerUtils:
+    :path: ../
+
+SPEC CHECKSUMS:
+  HImagePickerUtils: c744fd6bf53182ba8237f232e15690526d48f842
+
+PODFILE CHECKSUM: 90785ffe18377dd42f570553047fc1ac881d22d6
+
+COCOAPODS: 1.2.1.beta.1
